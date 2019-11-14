@@ -24,8 +24,6 @@ COPY nginx/error /etc/nginx/error
 COPY nginx/nginx.template.conf /etc/nginx/
 COPY nginx/proxy.template.conf /etc/nginx/conf.d/
 
-STOPSIGNAL SIGTERM
-
 #--------------------------------------------------------------
 # setting shells
 #--------------------------------------------------------------

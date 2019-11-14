@@ -12,7 +12,7 @@ FROM_PORT?=8080
 # container to port
 TO_PORT?=80
 # environment file
-ENV_FILE?=config/.local.env
+ENV_FILE?=config/local.env
 
 #--------------------------------------------------------------
 # make commands
@@ -27,7 +27,8 @@ run:
 
 run-local:
 	-docker stop $(APP_CONT)-local
-	docker run --rm -d --env-file=$(ENV_FILE) -p $(FROM_PORT):$(TO_PORT) --name $(APP_CONT)-local $(APP_IMAGE)-local:$(TAG)
+	-docker rm $(APP_CONT)-local
+	docker run --rm -d --env-file=$(ENV_FILE) -p $(FROM_PORT):$(TO_PORT) --name $(APP_CONT)-local $(APP_IMAGE):$(TAG)
 
 check-aws:
 	PROFILE=--profile $(PROFILE)

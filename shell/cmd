@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#--------------------------------------------------------------
+# Docker CMD
+#--------------------------------------------------------------
+envsubst '$$PROXY_DOMAIN$$PROXY_NAMESERVER' < /etc/nginx/conf.d/proxy.template.conf > /etc/nginx/conf.d/proxy.conf
+envsubst '$$PROXY_ROLE' < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
+rm -f /etc/nginx/conf.d/proxy.template.conf
+rm -f /etc/nginx/nginx.template.conf
+exec nginx -g 'daemon off;'

@@ -3,8 +3,10 @@
 #--------------------------------------------------------------
 # Docker CMD
 #--------------------------------------------------------------
-envsubst '$$PROXY_DOMAIN$$PROXY_NAMESERVER' < /etc/nginx/conf.d/proxy.template.conf > /etc/nginx/conf.d/proxy.conf
-envsubst '$$PROXY_ROLE' < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
+envsubst '$$PROXY_DOMAIN$$PROXY_PORT$$PROXY_NAMESERVER$$PROXY_ROBOTS_TXT' < /etc/nginx/conf.d/proxy.template.conf > /etc/nginx/conf.d/proxy.conf
+cat /etc/nginx/conf.d/proxy.conf
+envsubst '$$CONF_FILE' < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
+cat /etc/nginx/nginx.conf
 rm -f /etc/nginx/conf.d/proxy.template.conf
 rm -f /etc/nginx/nginx.template.conf
 nginx -g 'daemon off;'

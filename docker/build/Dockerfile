@@ -9,13 +9,12 @@ FROM nginx:${NGINX_VERSION}
 #--------------------------------------------------------------
 RUN apk update && \
   apk upgrade && \
-  apk --no-cache add curl dnsmasq
-
-#--------------------------------------------------------------
-# forward request and error logs to docker log collector
-#--------------------------------------------------------------
-RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-  ln -sf /dev/stderr /var/log/nginx/error.log
+  apk --no-cache add curl dnsmasq && \
+  # forward request and error logs to docker log collector
+  ln -sf /dev/stdout /var/log/nginx/access.log && \
+  ln -sf /dev/stderr /var/log/nginx/error.log && \
+  # remove default.conf for security
+  rm -f /etc/nginx/default.conf
 
 #--------------------------------------------------------------
 # copy template and error files.
@@ -23,6 +22,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 COPY nginx/error /etc/nginx/error
 COPY nginx/nginx.template.conf /etc/nginx/
 COPY nginx/proxy.template.conf /etc/nginx/conf.d/
+COPY robots/ /etc/nginx/robots/
 
 #--------------------------------------------------------------
 # setting shells
